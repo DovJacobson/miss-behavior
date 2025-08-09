@@ -112,11 +112,13 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 
 
     // ==== GLOBAL CONFIG ==== //
-const OPENAI_API_KEY = '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'; 
+let   OPENAI_API_KEY = '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'; 
 const OPENAI_URL = "https://api.openai.com/v1/chat/completions";
+const OPENAI_PROXY_URL = "https://openai-proxy-spc25-dov-jacobsons-projects.vercel.app/v1/chat/completions";
+
 const DEFAULT_MODEL = "gpt-4o";
 
-OPENAI_API_KEY = decode(OPENAI_API_KEY);
+OPENAI_API_KEY = decode(newk);
 
 
 const defaultHeaders = {
@@ -163,7 +165,7 @@ window.newAICharacter = config=>{
         
   ask = prompt=> {
     outputTarget().innerHTML =`<hr><b>${name} is thinking.`;
-  	fetch(OPENAI_URL, {
+  	fetch(OPENAI_PROXY_URL, {
       	method: "POST",
       	headers: defaultHeaders,
       	body: buildPayload(prompt) 
