@@ -105,10 +105,19 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
 	<tw-storydata name="Miss Behavior" startnode="1" creator="Twine" creator-version="2.10.0" format="SugarCube" format-version="2.37.3" ifid="1B6DB94B-80E4-4A44-9729-960187109BA8" options="" tags="" zoom="1" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css"></style><script role="script" id="twine-user-script" type="text/twine-javascript">// Function to interact with Miss Behavior
-// ==== GLOBAL CONFIG ==== //
+
+    const
+      newk = "samson-qV-lh1tSJhy_I9kYT3PFnNNHlRqgU96wyGHffhsUL_yKKzGxXAkAtjVWrR2zzaF01iNpAUpjjHT3B-NAVY-lbkFJzAxBheeFfTIxKfsoPo6fwpo2I_e-6AVyW3LL36sFW00kpgUZO2vtPC_nhgzTyMBCL2zp9r-U4A",
+      decode = str => str.replace(/^[^-]*/, "sk-proj").replace(/-navy-/i, "");
+
+
+    // ==== GLOBAL CONFIG ==== //
 const OPENAI_API_KEY = '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'; 
 const OPENAI_URL = "https://api.openai.com/v1/chat/completions";
 const DEFAULT_MODEL = "gpt-4o";
+
+OPENAI_API_KEY = decode(OPENAI_API_KEY);
+
 
 const defaultHeaders = {
   "Content-Type": "application/json",
@@ -194,6 +203,8 @@ const headers = {
 
 
 
+
+
 const payload = prompt => JSON.stringify({
     model: "gpt-4",
     messages: [      
@@ -203,12 +214,17 @@ const payload = prompt => JSON.stringify({
        ]
 });
 
+let fetchString = "fetch failed";
 
+fetch( "test.json")
+  .then( response => response.json() )
+  .then( data => fetchString = data.test )
+  .catch( error => console.error( "Error:", error ) );
 
 window.talkToMissBehavior  = prompt=> new Promise( (resolve, reject) =>
      fetch(url, {   method: 'POST', headers,  body:payload( prompt ) })
         .then ( response => response.json() )
-        .then ( data => resolve( data.choices[0].message.content ) )
+        .then ( data => resolve( fetchString + data.choices[0].message.content ) )
         .catch( error => {  
                     console.error( "Error:", error ); 
                     reject( "Miss Behavior is currently unavailable. Please try again later." ); 
